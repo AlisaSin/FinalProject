@@ -1,68 +1,69 @@
 package finalProject.steps;
 
+import finalProject.attributes.ProductPriceAttributes;
+import finalProject.attributes.UserPageAttributes;
 import finalProject.pages.ProductOrderingPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class ProductOrderingSteps {
 
     ProductOrderingPage productOrderingPage = new ProductOrderingPage();
-    @When("i press proceed button")
+    UserPageAttributes userPageAttributes = new UserPageAttributes();
+    @When("I press proceed button")
     public void iPressProceedButton() {
         productOrderingPage.pressProceedButton();
     }
 
-    @And("^i fill (.*) $")
+    @And("^I fill (.*) $")
     public void iFillEmail(String email) {
         productOrderingPage.fillEmail(email);
     }
 
-    @And("i chose get order in office")
+    @And("I chose get order in office")
     public void iChoseGetOrderInOffice() {
         productOrderingPage.choseGetOrderInOffice();
     }
 
-    @And("i chose current office")
+    @And("I chose current office")
     public void iChoseCurrentOffice() {
         productOrderingPage.choseCurrentOffice();
     }
 
-    @And("^i fill email (.*) and press submit button$")
+    @And("^I fill email (.*) and press submit button$")
     public void iFillEmailAndPressSubmitButton(String email) {
         productOrderingPage.fillEmail(email);
     }
 
-    @Then("^i fill user info name (.*) last name (.*) phone number (.*)$")
+    @Then("^I fill user info name (.*) last name (.*) phone number (.*)$")
     public void iFillUserInfoNameAlisaLastNameTestPhoneNumber(String name, String lastName, String phoneNumber) {
         productOrderingPage.fillUserInfo(name, lastName, phoneNumber);
+        userPageAttributes.setName(name);
+        userPageAttributes.setLastName(lastName);
+        userPageAttributes.setPhoneNumber(phoneNumber);
     }
 
-    @And("i press proceed button two times")
+    @And("I press proceed button two times")
     public void iPressProceedButtonTwoTimes() {
         productOrderingPage.pressProceedButtonAfterFillUserInfo();
-        productOrderingPage.pressProceedButtonAfterFillUserInfoSecondTime();
     }
 
-    @And("i chose pay with cash")
+    @And("I chose pay with cash")
     public void iChosePayWithCash() {
         productOrderingPage.chosePayWithCash();
     }
+    @Then("I remember user information in the order")
+    public void iRememberUserInformationInTheOrder() {
+        userPageAttributes.getUserDataInTheOrder();
+    }
 
-//    @Then("i remember user information in the order")
-//    public void iRememberUserInformationInTheOrder() {
-//    }
-//
-//    @And("validate that user information in the order equals user information what i fill")
-//    public void validateThatUserInformationInTheOrderEqualsUserInformationWhatIFill() {
-//
-//    }
-//
-//    @Then("i remember price")
-//    public void iRememberPrice() {
-//    }
-//
-//    @And("validate that price in product info and in cart is the same")
-//    public void validateThatPriceInProductInfoAndInCartIsTheSame() {
-//    }
-}
+    @And("Validate that user information in the order equals user information what i fill")
+    public void validateThatUserInformationInTheOrderEqualsUserInformationWhatIFill() {
+        assertEquals(userPageAttributes.getUserDataFormed(), userPageAttributes.getUserDataInTheOrder());
+    }
+
+    }
+

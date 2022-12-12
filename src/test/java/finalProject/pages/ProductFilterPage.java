@@ -1,5 +1,6 @@
 package finalProject.pages;
 
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -13,9 +14,9 @@ public class ProductFilterPage {
     private final By sortByButton = By.cssSelector("span[class='select2-selection__rendered']");
     private final By sortByPopularity = By.cssSelector("li[class='select2-results__option select2-results__option--highlighted']");
     private final By firstOption = By.cssSelector("a[class='ks-new-product-name']");
-//    private final By priceOnProductPage = By.cssSelector("div.product-price-details__block > span > span");
-
     private final By buttonAddToCart = By.cssSelector("button[id='add_to_cart_btn']");
+    @Getter
+    private final By priceOnProductPage = By.cssSelector(".detailed-cart-item__price");
     private final By buttonGoToCart = By.cssSelector("a[class='main-button']");
 
 
@@ -29,7 +30,7 @@ public class ProductFilterPage {
     }
 
     public void sortBy() {
-        WebElement sorting = $$(sortByButton).get(1);
+        WebElement sorting = $(sortByButton, 1);
         sorting.click();
         $(sortByPopularity).click();
     }
