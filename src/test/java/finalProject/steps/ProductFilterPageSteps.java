@@ -1,18 +1,19 @@
 package finalProject.steps;
 
-import finalProject.attributes.ProductPriceAttributes;
+import finalProject.model.ProductPrice;
 import finalProject.pages.ProductFilterPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
+import lombok.Data;
 
+@Data
 public class ProductFilterPageSteps {
     ProductFilterPage productFilterPage = new ProductFilterPage();
-
     @When("^I fill key word (.*) and i press submit button$")
     public void iFillKeyWordAnyAndIPressSubmitButton(String keyWords) {
         productFilterPage.searchingByKeyWords(keyWords);
     }
-    @And("I chose product brand")
+    @And("I chose product brand logitech")
     public void iChoseProductBrand() {
         productFilterPage.brandChose();
     }
@@ -21,8 +22,7 @@ public class ProductFilterPageSteps {
     public void iChooseFilterMostPopular() {
         productFilterPage.sortBy();
     }
-
-    @And("I choose first product")
+    @And("I choose product computer mouse Logitech MX Anywhere 3 pink")
     public void iChooseFirstProduct() {
         productFilterPage.chooseFirstOption();
     }
@@ -38,4 +38,5 @@ public class ProductFilterPageSteps {
     }
 
 
-}
+    }
+

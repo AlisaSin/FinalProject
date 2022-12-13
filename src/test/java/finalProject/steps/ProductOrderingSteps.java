@@ -1,7 +1,8 @@
 package finalProject.steps;
 
-import finalProject.attributes.ProductPriceAttributes;
-import finalProject.attributes.UserPageAttributes;
+import finalProject.model.ProductPrice;
+import finalProject.model.User;
+import finalProject.pages.ProductFilterPage;
 import finalProject.pages.ProductOrderingPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -12,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ProductOrderingSteps {
 
     ProductOrderingPage productOrderingPage = new ProductOrderingPage();
-    UserPageAttributes userPageAttributes = new UserPageAttributes();
+    User user = new User();
+
     @When("I press proceed button")
     public void iPressProceedButton() {
         productOrderingPage.pressProceedButton();
@@ -41,9 +43,9 @@ public class ProductOrderingSteps {
     @Then("^I fill user info name (.*) last name (.*) phone number (.*)$")
     public void iFillUserInfoNameAlisaLastNameTestPhoneNumber(String name, String lastName, String phoneNumber) {
         productOrderingPage.fillUserInfo(name, lastName, phoneNumber);
-        userPageAttributes.setName(name);
-        userPageAttributes.setLastName(lastName);
-        userPageAttributes.setPhoneNumber(phoneNumber);
+        user.setName(name);
+        user.setLastName(lastName);
+        user.setPhoneNumber(phoneNumber);
     }
 
     @And("I press proceed button two times")
@@ -55,15 +57,16 @@ public class ProductOrderingSteps {
     public void iChosePayWithCash() {
         productOrderingPage.chosePayWithCash();
     }
+
     @Then("I remember user information in the order")
     public void iRememberUserInformationInTheOrder() {
-        userPageAttributes.getUserDataInTheOrder();
+        productOrderingPage.getUserDataInTheOrder();
     }
 
     @And("Validate that user information in the order equals user information what i fill")
     public void validateThatUserInformationInTheOrderEqualsUserInformationWhatIFill() {
-        assertEquals(userPageAttributes.getUserDataFormed(), userPageAttributes.getUserDataInTheOrder());
+        assertEquals(user.getName() + " " + user.getLastName() +  "\n+371" + user.getPhoneNumber(), productOrderingPage.getUserDataInTheOrder());
     }
 
-    }
+}
 

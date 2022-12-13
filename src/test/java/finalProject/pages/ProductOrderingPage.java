@@ -1,13 +1,17 @@
 package finalProject.pages;
 
-import lombok.Getter;
+import com.codeborne.selenide.Condition;
+import finalProject.model.ProductPrice;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import static com.codeborne.selenide.Selenide.*;
+import java.time.Duration;
+
 import static com.codeborne.selenide.Selenide.$;
 
 public class ProductOrderingPage {
+
+    ProductPrice productPrice = new ProductPrice();
 
 
     private final By proceedButton = By.cssSelector("input[class='main-button cart-main-button']");
@@ -19,10 +23,9 @@ public class ProductOrderingPage {
     private final By userLastname = By.cssSelector("input[id='address_last_name']");
     private final By userPhoneNumber = By.cssSelector("input[id='address_phone_number']");
     private final By proceedButtonAfterFillUserInfo = By.cssSelector("button[class='main-button upcase fr small-radius button-min-width checkout-shipping-continue-button']");
+    private final By customerInfoWindow = By.className("chosen-address");
     private final By payWithCashButton = By.cssSelector("input[id='payment_unused_22']");
-    @Getter
-    private final By finalPrice = By.className("checkout-order-summary-total__price");
-    @Getter
+    public final By finalPrice = By.className("checkout-order-summary-total__price");
     private final By customerDataInTheOrder = By.className("checkout-order-summary__table-shipping-info");
 
 
@@ -56,12 +59,20 @@ public class ProductOrderingPage {
     public void pressProceedButtonAfterFillUserInfo() {
 
         $(proceedButtonAfterFillUserInfo).click();
-        sleep(4000);
+        $(customerInfoWindow).shouldBe(Condition.exist,Duration.ofSeconds(4));
         $(proceedButtonAfterFillUserInfo).click();
+
     }
 
     public void chosePayWithCash() {
         $(payWithCashButton).click();
+    }
+    public String getFinalOrderPrice() {
+         productPrice.setFinalPrice($(finalPrice).getText());
+        return productPrice.getFinalPrice();
+    }
+        public String getUserDataInTheOrder() {
+        return $(customerDataInTheOrder).getText();
     }
 
 }

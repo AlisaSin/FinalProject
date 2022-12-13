@@ -1,12 +1,13 @@
 package finalProject.pages;
 
-import lombok.Getter;
+import finalProject.model.ProductPrice;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import static com.codeborne.selenide.Selenide.*;
 
 public class ProductFilterPage {
+    ProductPrice productPrice = new ProductPrice();
 
     private final By searchingWindow = By.id("q");
     private final By submitButton = By.xpath("//button [@class='main-search-submit']");
@@ -15,7 +16,6 @@ public class ProductFilterPage {
     private final By sortByPopularity = By.cssSelector("li[class='select2-results__option select2-results__option--highlighted']");
     private final By firstOption = By.cssSelector("a[class='ks-new-product-name']");
     private final By buttonAddToCart = By.cssSelector("button[id='add_to_cart_btn']");
-    @Getter
     private final By priceOnProductPage = By.cssSelector(".detailed-cart-item__price");
     private final By buttonGoToCart = By.cssSelector("a[class='main-button']");
 
@@ -44,6 +44,10 @@ public class ProductFilterPage {
     public void addToCart(){
         $(buttonAddToCart).click();
 
+    }
+    public String getPriceOnProductPage() {
+        productPrice.setCatalogPrice($(priceOnProductPage, 1).getText());
+        return productPrice.getCatalogPrice();
     }
 
     public void goToTheShoppingCart() {
